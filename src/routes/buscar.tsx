@@ -1,7 +1,10 @@
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Search } from "lucide-react";
+import { LockKeyhole, Search } from "lucide-react";
 import { AppShell, PageHeader } from "@/components/AppShell";
+import { SiteLayout } from "@/components/SiteChrome";
+import { AuthGateProvider, GatedArea, useAuthGate } from "@/components/AuthGate";
+import { useDemoSession } from "@/lib/demo-session";
 import { OccurrenceCard } from "@/components/OccurrenceCard";
 import { DemoNote } from "@/components/FormKit";
 import { Input } from "@/components/ui/input";
@@ -9,6 +12,7 @@ import { statusLabel } from "@/components/StatusBadge";
 import { cn } from "@/lib/utils";
 import { demoOccurrences } from "@/data/demo";
 import type { OccurrenceStatus, Species } from "@/types";
+
 
 export const Route = createFileRoute("/buscar")({
   head: () => ({
