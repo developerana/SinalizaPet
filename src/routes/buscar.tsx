@@ -50,6 +50,27 @@ const statusOptions: (OccurrenceStatus | "todos")[] = [
 const distances = [1, 3, 5, 10] as const;
 
 function SearchPage() {
+  const { isAuthenticated } = useDemoSession();
+  if (isAuthenticated) {
+    return (
+      <AppShell>
+        <AuthGateProvider>
+          <SearchContent />
+        </AuthGateProvider>
+      </AppShell>
+    );
+  }
+  return (
+    <SiteLayout>
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+        <SearchContent />
+      </div>
+    </SiteLayout>
+  );
+}
+
+function SearchContent() {
+  const { isAuthenticated } = useAuthGate();
   const [query, setQuery] = useState("");
   const [species, setSpecies] = useState<Species | "todas">("todas");
   const [status, setStatus] = useState<OccurrenceStatus | "todos">("todos");
@@ -71,10 +92,10 @@ function SearchPage() {
   }, [query, species, status, radius]);
 
   return (
-    <AppShell>
+    <>
       <PageHeader
         title="Buscar"
-        description="Filtre o mural por espécie, status e distância aproximada."
+        description="Busca livre, sem login. Filtre o mural por espécie, status e distância aproximada."
       />
 
       <div className="poster mb-6 grid gap-4 p-4 sm:p-5">
@@ -120,6 +141,13 @@ function SearchPage() {
         {results.length} {results.length === 1 ? "ocorrência" : "ocorrências"}
       </p>
 
+      {!isAuthenticated && (
+        <p className="mb-4 flex items-center gap-2 border-2 border-ink bg-accent px-4 py-3 text-sm">
+          <LockKeyhole className="h-4 w-4 shrink-0" />
+          Ver os detalhes de uma ocorrência exige login ou criação de conta.
+        </p>
+      )}
+
       {results.length === 0 ? (
         <div className="poster p-8 text-center">
           <p className="font-display text-lg font-extrabold uppercase">Nada por aqui</p>
@@ -130,13 +158,16 @@ function SearchPage() {
       ) : (
         <div className="grid gap-4 xl:grid-cols-2">
           {results.map((o) => (
-            <OccurrenceCard key={o.id} occurrence={o} />
+            <GatedArea key={o.id} to={`/ocorrencia/${o.id}`}>
+              <OccurrenceCard occurrence={o} />
+            </GatedArea>
           ))}
         </div>
       )}
-    </AppShell>
+    </>
   );
 }
+
 
 function FilterRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
