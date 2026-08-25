@@ -105,18 +105,17 @@ function LandingContent() {
                     <span className="text-sm font-bold">Encontrei um animal</span>
                   </Button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => go("/buscar")}
+                <Link
+                  to="/buscar"
                   className="mt-3 flex w-full items-center gap-3 border-2 border-ink bg-paper px-4 py-3 text-left text-sm text-muted-foreground transition-colors hover:bg-secondary"
                 >
                   <Search className="h-4 w-4 shrink-0" />
                   <span className="truncate">Procure por um animal, bairro ou região...</span>
-                </button>
+                </Link>
                 {!isAuthenticated && (
                   <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
                     <LockKeyhole className="h-3.5 w-3.5 shrink-0" />
-                    Para sinalizar ou ver o mural completo, entre ou crie sua conta gratuita.
+                    A busca é livre. Para sinalizar ou abrir uma ocorrência, entre ou crie sua conta.
                   </p>
                 )}
               </div>
@@ -195,24 +194,23 @@ function LandingContent() {
             <h2 className="truncate text-3xl font-extrabold uppercase leading-none sm:text-4xl">
               Mural recente
             </h2>
-            <Button
-              variant="outline"
-              size="sm"
-              className="gap-1 border-2 border-ink"
-              onClick={() => go("/buscar")}
-            >
-              Ver todas <ArrowRight className="h-4 w-4" />
+            <Button asChild variant="outline" size="sm" className="gap-1 border-2 border-ink">
+              <Link to="/buscar">
+                Ver todas <ArrowRight className="h-4 w-4" />
+              </Link>
             </Button>
           </div>
-          <GatedArea to="/buscar" className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2">
             {highlights.map((o) => (
-              <OccurrenceCard key={o.id} occurrence={o} />
+              <GatedArea key={o.id} to={`/ocorrencia/${o.id}`}>
+                <OccurrenceCard occurrence={o} />
+              </GatedArea>
             ))}
-          </GatedArea>
+          </div>
           {!isAuthenticated && (
             <p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
               <LockKeyhole className="h-4 w-4 shrink-0" />
-              Entre para abrir cada ocorrência, falar com o tutor e sinalizar avistamentos.
+              Buscar é livre. Entre para abrir a ocorrência, falar com o tutor e sinalizar.
             </p>
           )}
         </div>
