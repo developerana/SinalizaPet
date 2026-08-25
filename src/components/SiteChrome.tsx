@@ -23,14 +23,12 @@ function ThreadsIcon({ className }: { className?: string }) {
 }
 
 const publicLinks = [
+  { to: "/buscar", label: "Buscar" },
   { to: "/como-funciona", label: "Como funciona" },
   { to: "/sobre", label: "Sobre" },
 ] as const;
 
-const gatedLinks = [
-  { to: "/buscar", label: "Buscar" },
-  { to: "/mapa", label: "Mapa" },
-] as const;
+const gatedLinks = [{ to: "/mapa", label: "Mapa" }] as const;
 
 export function SiteHeader() {
   const { go, isAuthenticated } = useAuthGate();
@@ -115,14 +113,8 @@ export function SiteFooter() {
             inicial.
           </p>
         </div>
-        <FooterCol
-          title="Plataforma"
-          gated
-          items={[
-            { to: "/buscar", label: "Buscar animais" },
-            { to: "/mapa", label: "Mapa de ocorrências" },
-          ]}
-        />
+        <FooterCol title="Plataforma" items={[{ to: "/buscar", label: "Buscar animais" }]} />
+        <FooterCol title="Mapa" gated items={[{ to: "/mapa", label: "Mapa de ocorrências" }]} />
         <FooterCol
           title="Sinalizar"
           gated
