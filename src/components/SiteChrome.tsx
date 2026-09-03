@@ -183,7 +183,7 @@ export function SiteFooter() {
             title="Plataforma"
             gated
             items={[
-              { to: "/buscar", label: "Buscar animais" },
+              { to: "/buscar", label: "Buscar animais", public: true },
               { to: "/mapa", label: "Mapa de ocorrências" },
             ]}
           />
