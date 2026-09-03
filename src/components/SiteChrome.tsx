@@ -215,7 +215,7 @@ function FooterCol({
   gated,
 }: {
   title: string;
-  items: { to: string; label: string }[];
+  items: { to: string; label: string; public?: boolean }[];
   gated?: boolean;
 }) {
   const { go } = useAuthGate();
@@ -225,7 +225,7 @@ function FooterCol({
       <ul className="mt-3 grid gap-2 text-sm">
         {items.map((i) => (
           <li key={i.to}>
-            {gated ? (
+            {gated && !i.public ? (
               <button type="button" onClick={() => go(i.to)} className="hover:underline">
                 {i.label}
               </button>
