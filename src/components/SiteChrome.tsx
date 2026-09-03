@@ -168,19 +168,25 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-10 grid gap-8 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
+        <div className="mt-12 grid gap-10 border-t border-primary-foreground/15 pt-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <p className="font-display text-2xl font-extrabold uppercase leading-none">
               {BRAND.name}
             </p>
             <p className="mt-2 text-sm text-primary-foreground/70">{BRAND.slogan}</p>
-            <p className="mt-4 max-w-sm text-xs text-primary-foreground/60">
+            <p className="mt-4 max-w-sm text-xs leading-relaxed text-primary-foreground/60">
               Rede comunitária de busca por animais perdidos. Dados de demonstração nesta versão
               inicial.
             </p>
           </div>
-          <FooterCol title="Plataforma" items={[{ to: "/buscar", label: "Buscar animais" }]} />
-          <FooterCol title="Mapa" gated items={[{ to: "/mapa", label: "Mapa de ocorrências" }]} />
+          <FooterCol
+            title="Plataforma"
+            gated
+            items={[
+              { to: "/buscar", label: "Buscar animais" },
+              { to: "/mapa", label: "Mapa de ocorrências" },
+            ]}
+          />
           <FooterCol
             title="Sinalizar"
             gated
@@ -191,6 +197,12 @@ export function SiteFooter() {
             ]}
           />
         </div>
+
+        <div className="mt-10 flex flex-col gap-2 border-t border-primary-foreground/15 pt-6 text-xs text-primary-foreground/50 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} {BRAND.name}. Todos os direitos reservados.</p>
+          <p>Feito pela comunidade, para os animais.</p>
+        </div>
+
       </div>
     </footer>
   );
