@@ -105,13 +105,14 @@ function LandingContent() {
                     <span className="text-sm font-bold">Encontrei um animal</span>
                   </Button>
                 </div>
-                <Link
-                  to="/buscar"
+                <a
+                  href="#buscar"
                   className="mt-3 flex w-full items-center gap-3 border-2 border-ink bg-paper px-4 py-3 text-left text-sm text-muted-foreground transition-colors hover:bg-secondary"
                 >
                   <Search className="h-4 w-4 shrink-0" />
-                  <span className="truncate">Procure por um animal, bairro ou região...</span>
-                </Link>
+                  <span className="truncate">Procure por um animal, cidade ou bairro...</span>
+                </a>
+
                 {!isAuthenticated && (
                   <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
                     <LockKeyhole className="h-3.5 w-3.5 shrink-0" />
