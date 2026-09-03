@@ -5,7 +5,7 @@ import { BRAND } from "@/lib/brand";
 
 import { Button } from "@/components/ui/button";
 import { GatedArea, useAuthGate } from "@/components/AuthGate";
-import { OccurrenceCard } from "@/components/OccurrenceCard";
+import { OccurrenceSearch } from "@/components/OccurrenceSearch";
 import { MapCanvas, MapLegend } from "@/components/MapCanvas";
 import { Marquee, SiteLayout } from "@/components/SiteChrome";
 import { demoAdminStats, demoOccurrences } from "@/data/demo";
@@ -43,7 +43,6 @@ function Landing() {
 
 function LandingContent() {
   const { go, isAuthenticated } = useAuthGate();
-  const highlights = demoOccurrences.filter((o) => o.status !== "obito").slice(0, 4);
 
   return (
     <>
@@ -105,13 +104,14 @@ function LandingContent() {
                     <span className="text-sm font-bold">Encontrei um animal</span>
                   </Button>
                 </div>
-                <Link
-                  to="/buscar"
+                <a
+                  href="#buscar"
                   className="mt-3 flex w-full items-center gap-3 border-2 border-ink bg-paper px-4 py-3 text-left text-sm text-muted-foreground transition-colors hover:bg-secondary"
                 >
                   <Search className="h-4 w-4 shrink-0" />
-                  <span className="truncate">Procure por um animal, bairro ou região...</span>
-                </Link>
+                  <span className="truncate">Procure por um animal, cidade ou bairro...</span>
+                </a>
+
                 {!isAuthenticated && (
                   <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
                     <LockKeyhole className="h-3.5 w-3.5 shrink-0" />
@@ -187,34 +187,19 @@ function LandingContent() {
         </Button>
       </section>
 
-      {/* MURAL */}
-      <section className="border-y-2 border-ink bg-secondary py-14">
+      {/* MURAL / BUSCA */}
+      <section id="buscar" className="scroll-mt-20 border-y-2 border-ink bg-secondary py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="mb-6 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3">
-            <h2 className="truncate text-3xl font-extrabold uppercase leading-none sm:text-4xl">
-              Mural recente
-            </h2>
-            <Button asChild variant="outline" size="sm" className="gap-1 border-2 border-ink">
-              <Link to="/buscar">
-                Ver todas <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            {highlights.map((o) => (
-              <GatedArea key={o.id} to={`/ocorrencia/${o.id}`}>
-                <OccurrenceCard occurrence={o} />
-              </GatedArea>
-            ))}
-          </div>
-          {!isAuthenticated && (
-            <p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
-              <LockKeyhole className="h-4 w-4 shrink-0" />
-              Buscar é livre. Entre para abrir a ocorrência, falar com o tutor e sinalizar.
-            </p>
-          )}
+          <h2 className="text-3xl font-extrabold uppercase leading-none sm:text-4xl">
+            Buscar no mural
+          </h2>
+          <p className="mb-6 mt-2 text-sm text-muted-foreground">
+            Busca livre, sem login. Escolha a cidade e filtre por espécie e status.
+          </p>
+          <OccurrenceSearch limit={6} showAllLink />
         </div>
       </section>
+
 
       {/* MAPA */}
       <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
