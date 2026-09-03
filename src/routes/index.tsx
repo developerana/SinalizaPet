@@ -188,34 +188,19 @@ function LandingContent() {
         </Button>
       </section>
 
-      {/* MURAL */}
-      <section className="border-y-2 border-ink bg-secondary py-14">
+      {/* MURAL / BUSCA */}
+      <section id="buscar" className="scroll-mt-20 border-y-2 border-ink bg-secondary py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="mb-6 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3">
-            <h2 className="truncate text-3xl font-extrabold uppercase leading-none sm:text-4xl">
-              Mural recente
-            </h2>
-            <Button asChild variant="outline" size="sm" className="gap-1 border-2 border-ink">
-              <Link to="/buscar">
-                Ver todas <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            {highlights.map((o) => (
-              <GatedArea key={o.id} to={`/ocorrencia/${o.id}`}>
-                <OccurrenceCard occurrence={o} />
-              </GatedArea>
-            ))}
-          </div>
-          {!isAuthenticated && (
-            <p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
-              <LockKeyhole className="h-4 w-4 shrink-0" />
-              Buscar é livre. Entre para abrir a ocorrência, falar com o tutor e sinalizar.
-            </p>
-          )}
+          <h2 className="text-3xl font-extrabold uppercase leading-none sm:text-4xl">
+            Buscar no mural
+          </h2>
+          <p className="mb-6 mt-2 text-sm text-muted-foreground">
+            Busca livre, sem login. Escolha a cidade e filtre por espécie e status.
+          </p>
+          <OccurrenceSearch limit={6} showAllLink />
         </div>
       </section>
+
 
       {/* MAPA */}
       <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
