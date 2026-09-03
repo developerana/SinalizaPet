@@ -101,87 +101,101 @@ export function Marquee({ items }: { items: string[] }) {
   );
 }
 
+const SOCIALS = [
+  {
+    label: "Instagram",
+    value: "@sinalizapet",
+    href: "https://www.instagram.com/sinalizapet/",
+    Icon: Instagram,
+  },
+  {
+    label: "Threads",
+    value: "@sinalizapet",
+    href: "https://www.threads.com/@sinalizapet?xmt=AQG00g4SjtxGvTH3iWnecHaM346N7pQuwdv6FcW7FYVbvNE",
+    Icon: ThreadsIcon,
+  },
+  {
+    label: "Facebook",
+    value: "SinalizaPet",
+    href: "https://www.facebook.com/SinalizaPet?locale=pt_BR",
+    Icon: Facebook,
+  },
+  {
+    label: "X (Twitter)",
+    value: "@SinalizaPet",
+    href: "https://x.com/SinalizaPet",
+    Icon: Twitter,
+  },
+];
+
 export function SiteFooter() {
   return (
     <footer className="border-t-2 border-ink bg-ink text-primary-foreground">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
-        <div>
-          <p className="font-display text-2xl font-extrabold uppercase leading-none">{BRAND.name}</p>
-          <p className="mt-2 text-sm text-primary-foreground/70">{BRAND.slogan}</p>
-          <p className="mt-4 max-w-sm text-xs text-primary-foreground/60">
-            Rede comunitária de busca por animais perdidos. Dados de demonstração nesta versão
-            inicial.
-          </p>
-        </div>
-        <FooterCol title="Plataforma" items={[{ to: "/buscar", label: "Buscar animais" }]} />
-        <FooterCol title="Mapa" gated items={[{ to: "/mapa", label: "Mapa de ocorrências" }]} />
-        <FooterCol
-          title="Sinalizar"
-          gated
-          items={[
-            { to: "/nova-ocorrencia", label: "Meu pet desapareceu" },
-            { to: "/novo-avistamento", label: "Eu vi um animal" },
-            { to: "/animal-encontrado", label: "Encontrei um animal" },
-          ]}
-        />
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+        <div className="rounded-2xl bg-primary px-6 py-8 text-primary-foreground sm:px-10 sm:py-10">
+          <div className="grid gap-8 md:grid-cols-[1.1fr_1fr] md:items-center">
+            <div>
+              <h2 className="font-display text-3xl font-extrabold uppercase leading-none tracking-tight sm:text-4xl">
+                Vamos ajudar juntos?
+              </h2>
+              <p className="mt-3 max-w-md text-sm text-primary-foreground/90">
+                Siga o SinalizaPet nas redes e ajude a espalhar cada sinal de animal perdido.
+              </p>
+            </div>
 
-        <div>
-          <p className="eyebrow text-primary-foreground/60">Redes sociais</p>
-          <ul className="mt-3 grid gap-2 text-sm">
-            <li>
-              <a
-                href="https://www.instagram.com/sinalizapet/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 hover:underline"
-                aria-label="Instagram do SinalizaPet"
-              >
-                <Instagram className="h-4 w-4" />
-                Instagram
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.threads.com/@sinalizapet?xmt=AQG00g4SjtxGvTH3iWnecHaM346N7pQuwdv6FcW7FYVbvNE"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 hover:underline"
-                aria-label="Threads do SinalizaPet"
-              >
-                <ThreadsIcon className="h-4 w-4" />
-                Threads
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.facebook.com/SinalizaPet?locale=pt_BR"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 hover:underline"
-                aria-label="Facebook do SinalizaPet"
-              >
-                <Facebook className="h-4 w-4" />
-                Facebook
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://x.com/SinalizaPet"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 hover:underline"
-                aria-label="X do SinalizaPet"
-              >
-                <Twitter className="h-4 w-4" />
-                X (Twitter)
-              </a>
-            </li>
-          </ul>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {SOCIALS.map(({ label, value, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3"
+                  aria-label={`${label} do SinalizaPet`}
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-ink/15 text-primary-foreground">
+                    <Icon className="h-4 w-4" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-xs text-primary-foreground/70">{label}</span>
+                    <span className="block truncate text-sm font-bold group-hover:underline">
+                      {value}
+                    </span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 grid gap-8 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
+          <div>
+            <p className="font-display text-2xl font-extrabold uppercase leading-none">
+              {BRAND.name}
+            </p>
+            <p className="mt-2 text-sm text-primary-foreground/70">{BRAND.slogan}</p>
+            <p className="mt-4 max-w-sm text-xs text-primary-foreground/60">
+              Rede comunitária de busca por animais perdidos. Dados de demonstração nesta versão
+              inicial.
+            </p>
+          </div>
+          <FooterCol title="Plataforma" items={[{ to: "/buscar", label: "Buscar animais" }]} />
+          <FooterCol title="Mapa" gated items={[{ to: "/mapa", label: "Mapa de ocorrências" }]} />
+          <FooterCol
+            title="Sinalizar"
+            gated
+            items={[
+              { to: "/nova-ocorrencia", label: "Meu pet desapareceu" },
+              { to: "/novo-avistamento", label: "Eu vi um animal" },
+              { to: "/animal-encontrado", label: "Encontrei um animal" },
+            ]}
+          />
         </div>
       </div>
     </footer>
   );
 }
+
 
 function FooterCol({
   title,
