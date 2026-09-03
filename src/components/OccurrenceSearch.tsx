@@ -45,6 +45,14 @@ export function OccurrenceSearch({
   const [species, setSpecies] = useState<Species | "todas">("todas");
   const [status, setStatus] = useState<OccurrenceStatus | "todos">("todos");
   const [city, setCity] = useState<string>(ALL_CITIES);
+  const [neighborhood, setNeighborhood] = useState<string>(ALL_CITIES);
+
+  const neighborhoodOptions = useMemo(() => {
+    if (city === ALL_CITIES) return [];
+    return Array.from(
+      new Set(demoOccurrences.filter((o) => o.city === city).map((o) => o.neighborhood)),
+    ).sort((a, b) => a.localeCompare(b, "pt-BR"));
+  }, [city]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -58,9 +66,11 @@ export function OccurrenceSearch({
       const matchSpecies = species === "todas" || o.species === species;
       const matchStatus = status === "todos" || o.status === status;
       const matchCity = city === ALL_CITIES || o.city === city;
-      return matchQuery && matchSpecies && matchStatus && matchCity;
+      const matchNeighborhood =
+        neighborhood === ALL_CITIES || (o.city === city && o.neighborhood === neighborhood);
+      return matchQuery && matchSpecies && matchStatus && matchCity && matchNeighborhood;
     });
-  }, [query, species, status, city]);
+  }, [query, species, status, city, neighborhood]);
 
   const visible = typeof limit === "number" ? results.slice(0, limit) : results;
 
@@ -78,9 +88,35 @@ export function OccurrenceSearch({
           />
         </div>
 
-        <FilterRow label="Cidade">
-          <CitySelect cities={cityOptions} value={city} onChange={setCity} />
-        </FilterRow>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <FilterRow label="Cidade">
+            <CitySelect
+              cities={cityOptions}
+              value={city}
+              onChange={(next) => {
+                setCity(next);
+                setNeighborhood(ALL_CITIES);
+              }}
+              className="sm:w-full"
+            />
+          </FilterRow>
+
+          <FilterRow label="Bairro">
+            <CitySelect
+              cities={neighborhoodOptions}
+              value={neighborhood}
+              onChange={setNeighborhood}
+              disabled={city === ALL_CITIES}
+              className="sm:w-full"
+              allLabel={
+                city === ALL_CITIES ? "Selecione a cidade primeiro" : "Todos os bairros"
+              }
+              searchPlaceholder="Pesquisar bairro..."
+              emptyText="Nenhum bairro encontrado."
+            />
+          </FilterRow>
+        </div>
+
 
         <FilterRow label="Espécie">
           {speciesOptions.map((s) => (
@@ -104,7 +140,9 @@ export function OccurrenceSearch({
       <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
         <p className="eyebrow">
           {results.length} {results.length === 1 ? "ocorrência" : "ocorrências"}
-          {city !== ALL_CITIES ? ` em ${city}` : ""}
+          {city !== ALL_CITIES
+            ? ` em ${neighborhood !== ALL_CITIES ? `${neighborhood}, ` : ""}${city}`
+            : ""}
         </p>
         {showAllLink && (
           <Button asChild variant="outline" size="sm" className="gap-1 border-2 border-ink">
