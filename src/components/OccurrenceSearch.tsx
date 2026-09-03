@@ -140,7 +140,9 @@ export function OccurrenceSearch({
       <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
         <p className="eyebrow">
           {results.length} {results.length === 1 ? "ocorrência" : "ocorrências"}
-          {city !== ALL_CITIES ? ` em ${city}` : ""}
+          {city !== ALL_CITIES
+            ? ` em ${neighborhood !== ALL_CITIES ? `${neighborhood}, ` : ""}${city}`
+            : ""}
         </p>
         {showAllLink && (
           <Button asChild variant="outline" size="sm" className="gap-1 border-2 border-ink">
