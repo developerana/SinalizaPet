@@ -168,7 +168,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-10 border-t border-primary-foreground/15 pt-10 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="mt-12 grid gap-10 border-t border-primary-foreground/15 pt-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <p className="font-display text-2xl font-extrabold uppercase leading-none">
               {BRAND.name}
@@ -196,7 +196,26 @@ export function SiteFooter() {
               { to: "/animal-encontrado", label: "Encontrei um animal" },
             ]}
           />
+          <div>
+            <p className="eyebrow text-primary-foreground/60">Redes sociais</p>
+            <ul className="mt-3 grid gap-2 text-sm">
+              {SOCIALS.map(({ label, href, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 hover:underline"
+                  >
+                    <Icon className="h-4 w-4 shrink-0" />
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
+
 
         <div className="mt-10 flex flex-col gap-2 border-t border-primary-foreground/15 pt-6 text-xs text-primary-foreground/50 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {BRAND.name}. Todos os direitos reservados.</p>
