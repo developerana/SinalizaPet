@@ -20,16 +20,12 @@ export function AuthGateProvider({ children }: { children: ReactNode }) {
   const { isAuthenticated } = useDemoSession();
   const [pending, setPending] = useState<string | null>(null);
 
+  // Acesso livre: todo o conteúdo pode ser visto sem conta.
   const go = useCallback(
     (path: string) => {
-      if (isAuthenticated) {
-        void navigate({ to: path });
-        return;
-      }
-      setPendingRedirect(path);
-      setPending(path);
+      void navigate({ to: path });
     },
-    [isAuthenticated, navigate],
+    [navigate],
   );
 
   const value = useMemo(() => ({ isAuthenticated, go }), [isAuthenticated, go]);
@@ -91,18 +87,6 @@ export function GatedArea({
   children: ReactNode;
   className?: string;
 }) {
-  const { isAuthenticated, go } = useAuthGate();
-  return (
-    <div
-      className={className}
-      onClickCapture={(event) => {
-        if (isAuthenticated) return;
-        event.preventDefault();
-        event.stopPropagation();
-        go(to);
-      }}
-    >
-      {children}
-    </div>
-  );
+  void to;
+  return <div className={className}>{children}</div>;
 }
